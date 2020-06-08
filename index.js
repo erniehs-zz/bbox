@@ -5,24 +5,6 @@ const resize = () => {
     ctx.canvas.height = ctx.canvas.parentElement.clientHeight
 }
 
-const draw = () => {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-
-    ctx.beginPath()
-    ctx.strokeStyle = "red"
-    ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.moveTo(0, 0)
-    ctx.lineTo(ctx.canvas.width, ctx.canvas.height)
-    ctx.moveTo(0, ctx.canvas.height)
-    ctx.lineTo(ctx.canvas.width, 0)
-    ctx.stroke()
-
-    ctx.beginPath()
-    ctx.strokeStyle = "yellow"
-    ctx.rect(ball.x, ball.y, 20, 20)
-    ctx.stroke()
-}
-
 window.addEventListener("load", () => {
     resize()
     draw()
@@ -38,11 +20,32 @@ var delta = 0
 var ball = { x: 100, y: 100 }
 var bv = { x: 10, y: -5 }
 
+var things = [
+    new Thing([100, 100], 0.1, [[-20, 5], [10, -7], [15, 10], [-10, 20]]),
+    new Thing([750, 300], 0.2, [[-20, 5], [10, -7], [15, 10], [-10, 20]]),
+    new Thing([200, 150], 0, [[-10, 5], [10, -7], [15, 10], [-10, 20]])
+]
+
+const draw = () => {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+    things.forEach(t => {
+        ctx.strokeStyle = "white"
+        ctx.beginPath()
+        ctx.moveTo(t.tp[0][0], t.tp[0][1])
+        for (let i = 1; i < t.p.length; i++) ctx.lineTo(t.tp[i][0], t.tp[i][1])
+        ctx.lineTo(t.tp[0][0], t.tp[0][1])
+        ctx.stroke()
+        ctx.strokeStyle = "yellow"
+        ctx.strokeRect(t.bb[0][0], t.bb[0][1], t.bb[1][0] - t.bb[0][0], t.bb[1][1] - t.bb[0][1])
+    })
+}
+
 const update = (dt) => {
-    ball.x += bv.x
-    ball.y += bv.y
-    if (ball.x <= 0 || ball.x >= ctx.canvas.width) bv.x = -bv.x
-    if (ball.y <= 0 || ball.y >= ctx.canvas.height) bv.y = -bv.y
+    things.forEach(t => {
+        t.a += 0.05
+        t.update()
+    })
 }
 
 const loop = (t) => {
