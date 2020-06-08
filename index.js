@@ -7,23 +7,16 @@ const resize = () => {
 
 window.addEventListener("load", () => {
     resize()
-    draw()
 })
 
 window.addEventListener("resize", () => {
     resize()
-    draw() // TODO throttle
 })
 
-var last = performance.now()
-var delta = 0
-var ball = { x: 100, y: 100 }
-var bv = { x: 10, y: -5 }
-
 var things = [
-    new Thing([100, 100], 0.1, [[-20, 5], [10, -7], [15, 10], [-10, 20]]),
-    new Thing([750, 300], 0.2, [[-20, 5], [10, -7], [15, 10], [-10, 20]]),
-    new Thing([200, 150], 0, [[-10, 5], [10, -7], [15, 10], [-10, 20]])
+    new Thing([100, 100], 0.0, zerov, 0.5, com([[-20, 5], [10, -7], [15, 10], [-10, 20]])),
+    new Thing([750, 300], 0.0, zerov, -4.0, com([[-20, 5], [10, -7], [15, 10], [-10, 20]])),
+    new Thing([210, 150], 0.0, zerov, 0, com([[-100, 50], [100, -70], [150, 100], [-100, 200]]))
 ]
 
 const draw = () => {
@@ -42,11 +35,11 @@ const draw = () => {
 }
 
 const update = (dt) => {
-    things.forEach(t => {
-        t.a += 0.05
-        t.update()
-    })
+    things.forEach(t => t.update(dt))
 }
+
+var last = performance.now()
+var delta = 0
 
 const loop = (t) => {
     window.requestAnimationFrame(loop)

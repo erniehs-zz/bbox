@@ -12,14 +12,19 @@ const bbox = (p) => {
 class Thing {
 
     // origin, angle, polygon
-    constructor(o, a, p) {
+    constructor(o, a, v, w, p) {
         this.o = o
         this.a = a
+        this.v = v
+        this.w = w
         this.p = p
-        this.update()
+        this.update(0)
     }
 
-    update() {
+    update(dt) {
+        this.o[0] += this.v[0] * dt
+        this.o[1] += this.v[1] * dt
+        this.a += this.w * dt
         let t = affineMatMul(affineMatTrans(this.o), affineMatRot(this.a))
         this.tp = this.p.map(v => affineMatVecMul(t, v)).map(r => [Math.round(r[0]), Math.round(r[1])])
         this.bb = bbox(this.tp)

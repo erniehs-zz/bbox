@@ -19,3 +19,17 @@ const affineMatMul = (m1, m2) => affineMat(
     m1[3] * m2[2] + m1[4] * m2[5] + m1[5])
 
 const affineMatVecMul = (m, v) => [m[0] * v[0] + m[1] * v[1] + m[2], m[3] * v[0] + m[4] * v[1] + m[5]]
+
+const zerov = [0, 0]
+
+const add = (v1, v2) => [v1[0] + v2[0], v1[1] + v2[1]]
+
+const sub = (v1, v2) => [v1[0] - v2[0], v1[1] - v2[1]]
+
+const div = (v, c) => [v[0] / c, v[1] / c]
+
+const mul = (v, c) => [v[0] * c, v[1] * c]
+
+const centroid = (p) => div(p.reduce((a, c) => add(a, c)), p.length)
+
+const com = (p, c = centroid(p)) => p.map(v => sub(v, c)) 
