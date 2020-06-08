@@ -1,3 +1,3 @@
-# blank-canvas-animated
+# bbox bounding boxes
 
-blank canvas html/css/js with animation loop
+playing around with bounding boxes
