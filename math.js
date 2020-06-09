@@ -30,6 +30,8 @@ const div = (v, c) => [v[0] / c, v[1] / c]
 
 const mul = (v, c) => [v[0] * c, v[1] * c]
 
+const round = (v) => [Math.round(v[0]), Math.round(v[1])]
+
 const centroid = (p) => div(p.reduce((a, c) => add(a, c)), p.length)
 
 const com = (p, c = centroid(p)) => p.map(v => sub(v, c)) 

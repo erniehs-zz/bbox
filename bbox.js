@@ -22,11 +22,10 @@ class Thing {
     }
 
     update(dt) {
-        this.o[0] += this.v[0] * dt
-        this.o[1] += this.v[1] * dt
+        this.o = add(this.o, mul(this.v, dt))
         this.a += this.w * dt
         let t = affineMatMul(affineMatTrans(this.o), affineMatRot(this.a))
-        this.tp = this.p.map(v => affineMatVecMul(t, v)).map(r => [Math.round(r[0]), Math.round(r[1])])
+        this.tp = this.p.map(v => affineMatVecMul(t, v)).map(r => round(r))
         this.bb = bbox(this.tp)
     }
 }
