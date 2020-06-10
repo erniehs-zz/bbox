@@ -96,12 +96,12 @@ var things = [
     new Thing([210, 150], 0.0, zerov, 0, com([[-100, 50], [100, -70], [150, 100], [-100, 200]]))
 ]
 
-const drawThing = (t) => {
+const drawThing = (t, c = false) => {
     ctx.strokeStyle = "white"
     ctx.beginPath()
     ctx.moveTo(t.tp[0][0], t.tp[0][1])
     for (let i = 1; i < t.tp.length; i++) ctx.lineTo(t.tp[i][0], t.tp[i][1])
-    ctx.lineTo(t.tp[0][0], t.tp[0][1])
+    c ? ctx.lineTo(mp[0], mp[1]) : ctx.lineTo(t.tp[0][0], t.tp[0][1])
     ctx.stroke()
 
     ctx.strokeStyle = "yellow"
@@ -122,23 +122,7 @@ const draw = () => {
     things.forEach(t => drawThing(t))
 
     if (newThing != null) {
-        ctx.strokeStyle = "white"
-        ctx.beginPath()
-        ctx.moveTo(newThing.tp[0][0], newThing.tp[0][1])
-        for (let i = 1; i < newThing.tp.length; i++) ctx.lineTo(newThing.tp[i][0], newThing.tp[i][1])
-        ctx.lineTo(mp[0], mp[1])
-        ctx.stroke()
-
-        ctx.strokeStyle = "yellow"
-        ctx.strokeRect(newThing.bb[0][0], newThing.bb[0][1], newThing.bb[1][0] - newThing.bb[0][0], newThing.bb[1][1] - newThing.bb[0][1])
-
-        ctx.strokeStyle = "green"
-        ctx.beginPath()
-        ctx.moveTo(newThing.o[0], newThing.o[1] - 10)
-        ctx.lineTo(newThing.o[0], newThing.o[1] + 10)
-        ctx.moveTo(newThing.o[0] - 10, newThing.o[1])
-        ctx.lineTo(newThing.o[0] + 10, newThing.o[1])
-        ctx.stroke()
+        drawThing(newThing, true)
     }
 }
 
