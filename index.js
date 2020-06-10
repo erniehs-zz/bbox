@@ -1,3 +1,5 @@
+// immutability be damned!
+
 var ctx = document.getElementById("grid").getContext("2d")
 
 const resize = () => {
@@ -13,6 +15,35 @@ window.addEventListener("resize", () => {
     resize()
 })
 
+var selected = []
+var md = false
+var mo = [0, 0]
+
+window.addEventListener("mousedown", (e) => {
+    if (!md) {
+        mo = [e.clientX, e.clientY]
+        selected = things.filter(t => pinbox(mo, t.bb))
+        md = true
+    }
+})
+
+window.addEventListener("mouseup", (e) => {
+    if (md) {
+        mo = [e.clientX, e.clientY]
+        selected = []
+        md = false
+    }
+})
+
+window.addEventListener("mousemove", (e) => {
+    if (md) {
+        mp = [e.clientX, e.clientY]
+        dm = sub(mp, mo)
+        selected.forEach(t => t.o = add(t.o, dm))
+        mo = mp
+    }
+})
+
 var things = [
     new Thing([100, 100], 0.0, zerov, 0.5, com([[-20, 5], [10, -7], [15, 10], [-10, 20]])),
     new Thing([750, 300], 0.0, zerov, -4.0, com([[-20, 5], [10, -7], [15, 10], [-10, 20]])),
@@ -21,7 +52,6 @@ var things = [
 
 const draw = () => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-
     things.forEach(t => {
         ctx.strokeStyle = "white"
         ctx.beginPath()

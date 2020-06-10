@@ -1,3 +1,5 @@
+// axis aligned boxes
+
 const bbox1 = (p) => {
     var bb = [[p[0][0], p[0][1]], [p[p.length - 1][0], p[p.length - 1][1]]]
     for (let i = 0; i < p.length; i++) {
@@ -11,7 +13,11 @@ const bbox1 = (p) => {
 
 const bbox2 = (p) => p.reduce((p, c) => [[Math.min(c[0], p[0][0]), Math.min(c[1], p[0][1])], [Math.max(c[0], p[1][0]), Math.max(c[1], p[1][1])]], [[Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER], [Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER]])
 
-// which is quicker?
+const between = (a, b, c) => a >= b && a <= c // a between b and c
+
+const pinbox = (p, b) => between(p[0], b[0][0], b[1][0]) && between(p[1], b[0][1], b[1][1]) // point in box
+
+// bbox which is quicker?
 const rand = (max) => Math.floor(Math.random() * Math.floor(max))
 
 const rubbish_shuffle = (a, c = 1 + rand(a.length * 2)) => {

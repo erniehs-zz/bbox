@@ -15,6 +15,6 @@ class Thing {
         this.a += this.w * dt
         let t = affineMatMul(affineMatTrans(this.o), affineMatRot(this.a))
         this.tp = this.p.map(v => affineMatVecMul(t, v)).map(r => round(r))
-        this.bb = bbox2(this.tp)
+        this.bb = bbox1(this.tp)
     }
 }
