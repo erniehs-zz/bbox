@@ -34,4 +34,4 @@ const round = (v) => [Math.round(v[0]), Math.round(v[1])]
 
 const centroid = (p) => div(p.reduce((a, c) => add(a, c)), p.length)
 
-const com = (p, c = centroid(p)) => p.map(v => sub(v, c)) 
+const com = (p, c = centroid(p)) => p.map(v => sub(v, c)) // center of mass...
