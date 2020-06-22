@@ -11,7 +11,9 @@ const bbox1 = (p) => {
     return bb
 }
 
-const bbox2 = (p) => p.reduce((p, c) => [[Math.min(c[0], p[0][0]), Math.min(c[1], p[0][1])], [Math.max(c[0], p[1][0]), Math.max(c[1], p[1][1])]], [[Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER], [Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER]])
+const bbox2 = (p) => p.reduce((p, c) => [[Math.min(c[0], p[0][0]), Math.min(c[1], p[0][1])], 
+    [Math.max(c[0], p[1][0]), Math.max(c[1], p[1][1])]], 
+    [[Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER], [Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER]])
 
 const between = (a, b, c) => a >= b && a <= c // a between b and c
 
